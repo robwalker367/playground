@@ -6,9 +6,8 @@ class App
     puts "User-Agent: " + env["HTTP_USER_AGENT"]
     puts
 
-    sleep(5) if env["PATH_INFO"] == "/sleep"
-
-    message = "Hello from the tube #{Process.pid}.\n"
+    # Rack specification response
+    message = "Body for PID #{Process.pid}.\n"
     [
       200,
       {
@@ -19,6 +18,3 @@ class App
     ]
   end
 end
-
-server = Ganymede.new(9292, App.new)
-server.serve

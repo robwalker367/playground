@@ -16,7 +16,7 @@ class Ganymede
 
   attr_accessor :server, :app
 
-  TOTAL_FORKS = 3
+  TOTAL_FORKS = 3 
 
   def prefork
     puts "Main PID: #{Process.pid}"
@@ -55,12 +55,7 @@ class Connection
       data = socket.readpartial(1024)
       parser << data
     end
-    on_message_complete
   end
-
-  private
-
-  attr_accessor :socket, :parser, :app
 
   def on_message_complete
     env = {
@@ -75,6 +70,10 @@ class Connection
     send_response(env)
   end
 
+  private
+
+  attr_accessor :socket, :parser, :app
+
   def send_response(env)
     status, headers, body = app.call(env)
     reason = HTTP_STATUS_CODES[status]
@@ -88,7 +87,7 @@ class Connection
     socket.write("\r\n")
 
     body.each do |chunk|
-      socket.write(hunk)
+      socket.write(chunk)
     end
     
     socket.close

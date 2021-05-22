@@ -1,0 +1,19 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ffi (1.15.1)
+    ffi-compiler (1.0.1)
+      ffi (>= 1.0.0)
+      rake
+    http-parser (1.2.3)
+      ffi-compiler (>= 1.0, < 2.0)
+    rake (13.0.3)
+
+PLATFORMS
+  x86_64-darwin-19
+
+DEPENDENCIES
+  http-parser
+
+BUNDLED WITH
+   2.2.17
