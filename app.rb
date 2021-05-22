@@ -1,4 +1,5 @@
 require_relative "ganymede"
+require_relative "router"
 
 class App
   def call(env)
@@ -7,14 +8,14 @@ class App
     puts
 
     # Rack specification response
-    message = "Body for PID #{Process.pid}.\n"
+    response_body = Router.new(env).dispatch
     [
       200,
       {
-        'Content-Type' => 'text/plain',
-        'Content-Length' => message.size.to_s
+        'Content-Type' => 'text/html',
+        'Content-Length' => response_body.size.to_s,
       },
-      [message]
+      [response_body]
     ]
   end
 end
