@@ -19,18 +19,19 @@ class Router
     "/" => "home_controller"
   }
 
-  def controller
-    ROUTE_MAP[env["PATH_INFO"]]
-  end
-
   def controller_path
     "./controllers/#{controller}.rb"
+  end
+
+  def controller
+    ROUTE_MAP[env["PATH_INFO"]]
   end
 
   def controller_output
     require_relative controller_path
     controller_klass.new(env).call
   end
+
 
   def controller_klass
     Kernel.const_get(
