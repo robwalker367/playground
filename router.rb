@@ -4,10 +4,10 @@ class Router
   end
 
   def dispatch
-    if File.file?(controller_path)
-      controller_output
+    if File.file?(path)
+      file_at_path
     else
-      not_found
+      file_not_found
     end
   end
 
@@ -15,31 +15,15 @@ class Router
 
   attr_reader :env
 
-  ROUTE_MAP = {
-    "/" => "home_controller"
-  }
-
-  def controller_path
-    "./controllers/#{controller}.rb"
+  def path
+    "./public/#{env["PATH_INFO"]}"
   end
 
-  def controller
-    ROUTE_MAP[env["PATH_INFO"]]
+  def file_at_path
+    File.read(path)
   end
 
-  def controller_output
-    require_relative controller_path
-    controller_klass.new(env).call
-  end
-
-
-  def controller_klass
-    Kernel.const_get(
-      controller.split("_").map(&:capitalize).join('')
-    )
-  end
-
-  def not_found
-    File.read('./views/not_found.html')
+  def file_not_found
+    File.read('./public/not_found.html')
   end
 end
